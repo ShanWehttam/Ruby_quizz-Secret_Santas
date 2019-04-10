@@ -25,10 +25,7 @@ class SecretSantas
       @pairs = givers.zip(receivers).map {|*pairs| pairs.to_h}
       break if @pairs.map(& SIRNAME_MATCH).all?(& SELF_OR_FAMILY)
     end
-  end
-
-  def results
-    @pairs.map { |pair| pair }
+    @pairs
   end
 
 end
@@ -46,5 +43,4 @@ xmas = SecretSantas.new([
 xmas.santas
 xmas.givers
 xmas.receivers
-xmas.remove_family_members
-puts xmas.results
+puts xmas.remove_family_members
