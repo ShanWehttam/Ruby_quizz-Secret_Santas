@@ -21,10 +21,8 @@ class SecretSantas
   end
   
   def remove_family_members
-    loop do
-      @pairs = givers.zip(receivers).map {|*pairs| pairs.to_h}
-      break if @pairs.map( &SIRNAME_MATCH ).all?( &SELF_OR_FAMILY )
-    end
+    loop { @pairs = givers.zip(receivers).map {|*pairs| pairs.to_h}
+           break if @pairs.map(&SIRNAME_MATCH).all?(&SELF_OR_FAMILY) }
     @pairs
   end
 
