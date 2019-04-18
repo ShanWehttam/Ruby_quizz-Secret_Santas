@@ -3,7 +3,7 @@
 $stdout.sync = true
 
 class SecretSantas
-  attr_reader :givers, :receivers, :santas
+  attr_reader :givers, :receivers, :santas, :pairs
 
   SIRNAME_MATCH = -> (x) { x.keys[0].split(" ")[1] == x.values[0].split(" ")[1] }
   SELF_OR_FAMILY = -> (x) { x == false }
@@ -21,9 +21,10 @@ class SecretSantas
   end
   
   def remove_family_members
-    loop { @pairs = givers.zip(receivers).map {|*pairs| pairs.to_h}
-           break if @pairs.map(&SIRNAME_MATCH).all?(&SELF_OR_FAMILY) }
-    @pairs
+    loop do
+      @pairs = givers.zip(receivers).map {|*pairs| pairs.to_h}
+      break if @pairs.map(&SIRNAME_MATCH).all?(&SELF_OR_FAMILY)
+    end
   end
 
 end
@@ -41,4 +42,5 @@ xmas = SecretSantas.new([
 xmas.santas
 xmas.givers
 xmas.receivers
-puts xmas.remove_family_members
+xmas.remove_family_members
+puts xmas.pairs
